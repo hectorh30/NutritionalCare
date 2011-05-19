@@ -1,0 +1,24 @@
+Hector\FoodServiceBundle\Entity\Item:
+  type: entity
+  table: item
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    name:
+      type: string
+      length: 255
+    minTemp:
+      type: integer
+    maxTemp:
+      type: integer
+  manyToOne:
+    meal:
+      targetEntity: Hector\FoodServiceBundle\Entity\Meal
+      inversedBy: items
+  oneToMany:
+    measurings:
+      targetEntity: Hector\FoodServiceBundle\Entity\Measuring
+      mappedBy: item

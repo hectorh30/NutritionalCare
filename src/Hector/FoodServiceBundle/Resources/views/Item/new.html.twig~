@@ -1,0 +1,37 @@
+{% extends '::base.html.twig' %}
+
+{% set menu = 'home' %}
+{% set section = 'item' %}
+
+{% block body %}
+
+<section class="grid_12">
+  <div class="block-border">
+    <form class="block-content form" id="{{ formName }}" action="{{ path('_item_new') }}" method="post" {{ form_enctype(form) }}>
+      <h1>New item</h1>
+
+      <div class="columns">
+	<div class="colx2-left">
+	<fieldset class="grey-bg required">
+	  {{ form_row(form.meal) }}
+	  {{ form_row(form.name) }}
+	</fieldset>
+	</div>
+	<div class="colx2-right">
+	<fieldset>
+	  {{ form_row(form.minTemp) }}
+	  {{ form_row(form.maxTemp) }}
+	</fieldset>
+	</div>
+      </div>
+      {{ form_rest(form) }}
+
+      <fieldset class="grey-bg no-margin">
+	<div class="float-right"><button type="submit" class="medium" onclick="submitForm(this.{{ formName }}">Save</button></div>
+	<a class="button" href="{{ url('_item_index') }}">Back to list</a>
+	<!--input type="Save"/-->
+      </fieldset>
+    </form>    
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,109 @@
+<?php
+
+namespace Hector\FoodServiceBundle\Entity;
+
+use Hector\FoodServiceBundle\Entity\Measuring;
+
+/**
+ * Hector\FoodServiceBundle\Entity\Meal
+ */
+class Meal
+{
+    /**
+     * @var integer $id
+     */
+    private $id;
+
+    /**
+     * @var string $name
+     * @assert:NotBlank(
+     *   message="Escriba un nombre"
+     * )
+     */
+    private $name;
+
+    /**
+     * @var Hector\FoodServiceBundle\Entity\Item
+     */
+    private $items;
+
+    public function __construct()
+    {
+        $this->items = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
+     * Get id
+     *
+     * @return integer $id
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string $name
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Add items
+     *
+     * @param Hector\FoodServiceBundle\Entity\Item $items
+     */
+    public function addItems(\Hector\FoodServiceBundle\Entity\Item $items)
+    {
+        $this->items[] = $items;
+    }
+
+    /**
+     * Get items
+     *
+     * @return Doctrine\Common\Collections\Collection $items
+     */
+    public function getItems()
+    {
+        return $this->items;
+    }
+    
+    public function __toString()
+    {
+      return $this->getName();
+    }
+
+    /**
+     * Return an number array of the items in this meal
+     */
+    public function getItemNames()
+    {
+      foreach($this->getItems() as $item){
+	$names[] = $item->getName();
+      }
+      return $names;
+    }
+
+    /**
+     * Return a string about the last measuring done
+     */  
+    public function getLastMeasuringString($em)
+    {
+      $measurings = $em->createQuery('SELECT u from Hector\FoodServiceBundle\Entity\Measuring u GROUP BY u.time')->getResult();
+      return $measurings[0];
+    }
+}

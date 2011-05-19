@@ -1,0 +1,150 @@
+<?php
+
+namespace Hector\FoodServiceBundle\Entity;
+
+/**
+ * Hector\FoodServiceBundle\Entity\Measuring
+ */
+class Measuring
+{
+    /**
+     * @var integer $id
+     */
+    private $id;
+
+    /**
+     * @var boolean $calibrated
+     */
+    private $calibrated;
+
+    /**
+     * @var datetime $time
+     */
+    private $time;
+
+    /**
+     * @var string $responsible
+     */
+    private $responsible;
+
+    /**
+     * @var integer $temperature
+     */
+    private $temperature;
+
+    /**
+     * @var Hector\FoodServiceBundle\Entity\Item
+     */
+    private $item;
+
+
+    /**
+     * Get id
+     *
+     * @return integer $id
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set calibrated
+     *
+     * @param boolean $calibrated
+     */
+    public function setCalibrated($calibrated)
+    {
+        $this->calibrated = $calibrated;
+    }
+
+    /**
+     * Get calibrated
+     *
+     * @return boolean $calibrated
+     */
+    public function getCalibrated()
+    {
+        return $this->calibrated;
+    }
+
+    /**
+     * Set time
+     *
+     * @param datetime $time
+     */
+    public function setTime($time)
+    {
+        $this->time = $time;
+    }
+
+    /**
+     * Get time
+     *
+     * @return datetime $time
+     */
+    public function getTime()
+    {
+        return $this->time;
+    }
+
+    /**
+     * Set responsible
+     *
+     * @param string $responsible
+     */
+    public function setResponsible($responsible)
+    {
+        $this->responsible = $responsible;
+    }
+
+    /**
+     * Get responsible
+     *
+     * @return string $responsible
+     */
+    public function getResponsible()
+    {
+        return $this->responsible;
+    }
+
+    /**
+     * Set temperature
+     *
+     * @param integer $temperature
+     */
+    public function setTemperature($temperature)
+    {
+        $this->temperature = $temperature;
+    }
+
+    /**
+     * Get temperature
+     *
+     * @return integer $temperature
+     */
+    public function getTemperature()
+    {
+        return $this->temperature;
+    }
+
+    /**
+     * Set item
+     *
+     * @param Hector\FoodServiceBundle\Entity\Item $item
+     */
+    public function setItem(\Hector\FoodServiceBundle\Entity\Item $item)
+    {
+        $this->item = $item;
+    }
+
+    /**
+     * Get item
+     *
+     * @return Hector\FoodServiceBundle\Entity\Item $item
+     */
+    public function getItem()
+    {
+        return $this->item;
+    }
+}

@@ -1,0 +1,24 @@
+{% extends '::base.html.twig' %}
+
+{% set menu = 'home' %}
+{% set section = 'meal' %}
+
+{% block body %}
+
+<section class="grid_12">
+  <div class="block-border">
+    <form class="block-content form" id="{{ formName }}" action="{{ path('_meal_new') }}" method="post">
+      <h1>New meal</h1>
+      <fieldset class="grey-bg required">
+	{{ form_row(form.name) }}
+	{{ form_rest(form) }}
+      </fieldset>
+      <fieldset class="grey-bg no-margin">
+	<div class="float-right"><button type="submit" class="medium" onclick="submitForm(this.{{ formName }}">Save</button></div>
+	<a class="button" href="{{ url('_meal_index') }}">Back to list</a>
+	<!--input type="Save"/-->
+      </fieldset>
+    </form>    
+  </div>
+</section>
+{% endblock %}

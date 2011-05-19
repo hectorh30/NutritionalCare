@@ -1,0 +1,30 @@
+{% extends '::base.html.twig' %}
+
+{% set menu = 'home' %}
+{% set section = 'meal' %}
+
+{% block body %}
+<section class="grid_12">
+  <div class="block-border">
+    <form class="block-content form" id="{{ formName }}" action="{{ path('_meal_edit',{'id': meal.id }) }}" method="post">
+      <h1>Editando: {{ meal.name }}</h1>
+
+      {{ form_row(form.name) }}
+      <br/>
+      {% for item in form.items %}
+      <fieldset class="grey-bg required">
+	<legend>Alimento</legend>
+	{{ form_widget(item) }}
+      </fieldset>      
+      {% endfor %}
+
+      {{ form_rest(form) }}
+      <fieldset class="grey-bg no-margin">
+	<div class="float-right"><button type="submit" class="medium" onclick="submitForm(this.{{ formName }}">Guardar</button></div>
+	<a class="button" href="{{ url('_meal_index') }}">Volver</a>
+      </fieldset>
+    </form>    
+  </div>
+</section>
+
+{% endblock %}

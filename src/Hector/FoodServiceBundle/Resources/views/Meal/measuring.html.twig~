@@ -1,0 +1,51 @@
+{% extends '::base.html.twig' %}
+
+{% form_theme form _self %}
+
+{% set menu = 'home' %}
+{% set section = 'meal' %}
+
+
+{% block field_row %}
+{% spaceless %}
+       {{ form_errors(form) }} {{ form_widget(form) }}
+{% endspaceless %}
+{% endblock field_row %}
+
+
+{% block title %}Measuring meal: {%endblock%}
+
+{% block body %}
+<section class="grid_12">
+  <div class="block-border">
+    <form class="block-content form" id="{{ formName }}" action="{{ path('_meal_edit',{'id': meal.id }) }}" method="post">
+      <h1>Midiendo: {{ meal.name }}</h1>
+
+      {{ form_errors(form) }}
+
+      {{ form_label(form.calibrated,'Calibrado') }}
+      {{ form_errors(form.calibrated) }}
+      {{ form_widget(form.calibrated) }} <br/>
+      {{ form_label(form.responsible,'Responsable') }}
+      {{ form_errors(form.responsible) }}
+      {{ form_widget(form.responsible) }} <br/>
+
+      <br/>
+      {% for item in meal.items %}
+      <fieldset class="grey-bg required">
+	<legend>{{item.name|capitalize}}</legend>
+	{{ form_errors(form[item.id]) }}
+	{{ form_widget(form[item.id]) }}
+      </fieldset>      
+      {% endfor %}
+
+      {{ form_rest(form) }}
+      <fieldset class="grey-bg no-margin">
+	<div class="float-right"><button type="submit" class="medium" onclick="submitForm(this.{{ formName }}">Guardar</button></div>
+	<a class="button" href="{{ url('_meal_index') }}">Volver</a>
+      </fieldset>
+    </form>    
+  </div>
+</section>
+
+{% endblock %}

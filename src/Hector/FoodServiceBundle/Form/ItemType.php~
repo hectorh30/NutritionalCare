@@ -1,0 +1,23 @@
+<?php
+
+namespace Hector\FoodServiceBundle\Form;
+
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilder;
+
+class ItemType extends AbstractType
+{
+    public function buildForm(FormBuilder $builder, array $options)
+    {
+      $builder->add('name','text')
+	->add('minTemp','integer')
+	->add('maxTemp','integer');
+    }
+
+    public function getDefaultOptions(array $options)
+    {
+        return array(
+            'data_class' => 'Hector\FoodServiceBundle\Entity\Item',
+        );
+    }
+}

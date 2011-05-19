@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>Servicio de alimentación</title>
+        {% block stylesheets %}{% endblock %}
+	<link rel="stylesheet" type="text/css" media="screen" href="{{ asset('css/reset.css') }}" /> 
+	<link rel="stylesheet" type="text/css" media="screen" href="{{ asset('css/common.css') }}"/>
+	<link rel="stylesheet" type="text/css" media="screen" href="{{ asset('css/form.css') }}" /> 
+	<link rel="stylesheet" type="text/css" media="screen" href="{{ asset('css/standard.css') }}" /> 
+	<link rel="stylesheet" type="text/css" media="screen" href="{{ asset('css/960.gs.fluid.css') }}" /> 
+	<link rel="stylesheet" type="text/css" media="screen" href="{{ asset('css/simple-lists.css') }}" /> 
+	<link rel="stylesheet" type="text/css" media="screen" href="{{ asset('css/block-lists.css') }}" /> 
+	<link rel="stylesheet" type="text/css" media="screen" href="{{ asset('css/planning.css') }}" /> 
+	<link rel="stylesheet" type="text/css" media="screen" href="{{ asset('css/table.css') }}" /> 
+	<link rel="stylesheet" type="text/css" media="screen" href="{{ asset('css/calendars.css') }}" /> 
+	<link rel="stylesheet" type="text/css" media="screen" href="{{ asset('css/wizard.css') }}" /> 
+	<link rel="stylesheet" type="text/css" media="screen" href="{{ asset('css/gallery.css') }}" /> 
+	<link rel="stylesheet" type="text/css" media="screen" href="{{ asset('css/special-pages.css') }}" /> 
+	<script type="text/javascript" src="{{ asset('js/html5.js') }}"></script> 
+	<script type="text/javascript" src="{{ asset('js/jquery-1.4.2.min.js') }}"></script> 
+	<script type="text/javascript" src="{{ asset('js/old-browsers.js') }}"></script> 
+	<script type="text/javascript" src="{{ asset('js/jquery.accessibleList.js') }}"></script> 
+	<script type="text/javascript" src="{{ asset('js/searchField.js') }}"></script> 
+	<script type="text/javascript" src="{{ asset('js/common.js') }}"></script> 
+	<script type="text/javascript" src="{{ asset('js/standard.js') }}"></script> 
+	<script type="text/javascript" src="{{ asset('js/jquery.tip.js') }}"></script> 
+	<script type="text/javascript" src="{{ asset('js/jquery.hashchange.js') }}"></script> 
+	<script type="text/javascript" src="{{ asset('js/jquery.contextMenu.js') }}"></script> 
+	<script type="text/javascript" src="{{ asset('js/list.js') }}"></script> 
+    </head>
+    <body>
+      <header>
+	<div class="container 12">
+	  <p id="skin-name"><strong>NutritionalCare</strong></p>
+	  <div class="server-info">v. BETA 1</div>
+	</div>
+      </header>
+
+      {% block menu %}
+      <nav id="main-nav">
+	<ul class="container_12">
+	  <li class="home{% if menu=='home' %} current{% endif %}" title="Inicio" title>
+	    <a href="{{ url('_home') }}">Inicio</a>
+	    <ul>
+	      <li class="with-menu{% if section=='meal' %} current{% endif %}">
+	        <a href="{{ url('_meal_index') }}">Tiempo de comida</a>
+		<div class="menu">
+		  <img src="{{ asset('images/menu-open-arrow.png') }}" width="16" height="16"/>
+		  <ul style="opacity: 1; ">
+		    <li>
+		      <a href="{{ url('_meal_new') }}">Nuevo</a>
+		    </li>
+		    <li>
+		      <a href="{{ url('_meal_index') }}">Lista</a>
+		    </li>
+		  </ul>		    
+		</div>
+	      </li>
+	      <li class="with-menu{% if section=='item' %} current{% endif %}">
+	        <a href="{{ url('_item_index') }}">Alimento</a>
+		<div class="menu">
+		  <img src="{{ asset('images/menu-open-arrow.png') }}" width="16" height="16"/>
+		  <ul style="opacity: 1; ">
+		    <li>
+		      <a href="{{ url('_item_new') }}">Nuevo</a>
+		    </li>
+		    <li>
+		      <a href="{{ url('_item_index') }}">Lista</a>
+		    </li>
+		  </ul>		    
+		</div>
+	      </li>
+	    </ul>
+	  </li>
+	  <li class="stats{% if menu=='charts' %} current{% endif %}" title="stats">
+	    <a href="{{ url('_chart_meal_query') }}" title>Estadísticas</a>
+	    <ul>
+	      <li class="{% if section=='meal' %} current{% endif %}">
+	        <a href="{{ url('_chart_meal_query') }}">Tiempo de comida</a>
+	      </li>
+	      <li class="{% if section=='item' %} current{% endif %}">
+	        <a href="{{ url('_chart_item_query') }}">Alimento</a>
+	      </li>
+	    </ul>
+	  </li>
+	</ul>
+      </nav>
+      {% endblock %}
+
+      <div id="sub-nav">
+	<div class="container_12">
+	  
+	</div>
+      </div>
+
+      <div id="status-bar"><div class="container_12"></div></div>      
+      <div id="header-shadow"></div>
+      <div id="control-bar" class="gre-bg clearfix" style="opacity: 1;"><div class="container_12"></div></div>
+
+        {% block body %}{% endblock %}
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>

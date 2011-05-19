@@ -1,0 +1,17 @@
+Hector\FoodServiceBundle\Entity\Meal:
+  type: entity
+  table: meal
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    name:
+      type: string
+      length: 255
+  oneToMany:
+    items:
+      targetEntity: Hector\FoodServiceBundle\Entity\Item
+      mappedBy: meal
+      cascade: ["remove"]

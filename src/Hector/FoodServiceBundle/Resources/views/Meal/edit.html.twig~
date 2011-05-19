@@ -1,0 +1,14 @@
+{% extends '::base.html.twig' %}
+
+{% set menu = 'home' %}
+{% set section = 'meal' %}
+
+{% block body %}
+<h2>Editar tiempo de comida: {{ meal.name }}</h2><br/>
+
+<form action="{{ path('_meal_edit', { 'id': meal.id }) }}" method="post" {{ form_enctype(form) }}>
+  {{ form_widget(form) }}
+  <input type="submit" value="Guardar"/>
+</form>
+
+{% endblock %}

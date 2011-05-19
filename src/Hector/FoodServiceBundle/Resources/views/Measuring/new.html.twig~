@@ -1,0 +1,14 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Food service webpage{%endblock%}
+
+{% block body %}
+
+Creating a new measuring?
+<form action="{{ path('_measuring_new') }}" method="post" {{ form_enctype(form) }}>
+  {{ form_widget(form) }}
+  <input type="submit"/>
+</form>
+
+<a href="{{ url('_meal_index') }}">volver a la lista</a>
+{% endblock %}

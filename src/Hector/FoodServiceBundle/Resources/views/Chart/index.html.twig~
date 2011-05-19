@@ -1,0 +1,148 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Food service webpage{%endblock%}
+
+{% block body %}
+
+<section class="grid_4">
+  <div class="block-border">
+    <form class="block-content form" id="{{ formName }}" action="{{ path('_chart_meal_query') }}" method="post" {{ form_enctype(form) }}>
+      <h1>Meal chart</h1>
+      {% if app.session.hasFlash('error') %}
+      <p class="message error no-margin">
+	{{ app.session.flash('error') }}
+	<span class="close-bt"></span>
+      </p>
+      {% endif %}
+      <fieldset class="grey-bg required">
+	{{ form_row(form.meal) }}
+      </fieldset>
+
+      <!-- Kind of special fieldsets -->
+      <fieldset class="collapsed">
+	<legend><a href="#">Set dates</a></legend>
+	{{ form_label(form.fromDate,'From date:') }}{{ form_errors(form.fromDate) }}{{ form_widget(form.fromDate) }}
+	{{ form_label(form.toDate,'To date:') }}{{ form_errors(form.toDate) }}{{ form_widget(form.toDate) }}
+      </fieldset>
+
+      <fieldset class="collapsed">
+	<legend><a href="#">Set times</a></legend>
+	{{ form_label(form.fromTime,'From time:') }}{{ form_errors(form.fromTime) }}{{ form_widget(form.fromTime) }}
+	{{ form_label(form.toTime,'To time:') }}{{ form_errors(form.toTime) }}{{ form_widget(form.toTime) }}
+      </fieldset>
+      {{ form_rest(form) }}
+
+      <fieldset class="grey-bg no-margin">
+	<div class="float-right"><button type="submit" class="medium" onclick="submitForm(this.{{ formName }}">Generate</button></div>
+      </fieldset>
+      
+    </form>    
+  </div>
+</section>
+
+{% if hasChart %}
+<section class="grid_8">
+  <div class="block-border">
+    <div class="block-content">
+
+      {# debuggin stuff #}
+      {#
+      {% for row in values %}
+      <ul>
+	<li>{{ row.time.format('Y-m-d H:s') }}: {{ row.diffH }}H, {{ row.diffM }}M</li>
+	<ul>
+	  {% for item in row.data %}
+	  <li>{{ item }}</li>
+	  {% endfor %}
+	</ul>
+      </ul>
+      {% endfor %}
+      #}
+
+      <!-- amcharts script-->
+      <!-- swf object (version 2.2) is used to detect if flash is installed and include swf in the page -->
+      <script type="text/javascript" src="{{ asset('amcharts/flash/swfobject.js') }}"></script>
+
+      <!-- following scripts required for JavaScript version. The order is important! -->
+      <script type="text/javascript" src="{{ asset('amcharts/javascript/amcharts.js') }}"></script>
+      <script type="text/javascript" src="{{ asset('amcharts/javascript/amfallback.js') }}"></script>
+      <script type="text/javascript" src="{{ asset('amcharts/javascript/raphael.js') }}"></script>
+
+
+      <!-- chart is placed in this div. if you have more than one chart on a page, give unique id for each div -->
+      <div id="chartdiv" style="width:600px; height:400px; background-color:#FFFFFF"></div>
+
+      <script type="text/javascript">
+	
+            var params = {
+                bgcolor:"#FFFFFF"
+                };
+
+		    var flashVars = {
+		        path: "{{ asset('amcharts/flash/') }}",
+
+				/* in most cases settings and data are loaded from files, but, as this require
+				 all the files to be upladed to web server, we use inline data and settings here.*/
+chart_data:"{% for row in values %}{{ row.time.format('Y-m-d H:s') }};{% for item in row.data %}{% if not (item is empty) %}{{ item.temperature }}{% endif %}{% if not loop.last %};{% endif %}{% endfor %}{% if not loop.last %}\n{% endif %}{% endfor %}",
+chart_settings: "{% spaceless %}
+<settings>
+  <hide_bullets_count>18</hide_bullets_count>
+  <data_type>csv</data_type>
+  <plot_area><margins><left>50</left><right>40</right><top>55</top><bottom>30</bottom></margins></plot_area>
+  <grid><x><alpha>10</alpha>
+    {# <approx_count>{{ values|length }}</approx_count> #}
+    </x><y_left><alpha>10</alpha></y_left>
+  </grid>
+  <axes><x><width>1</width><color>0D8ECF</color></x><y_left><width>1</width><color>0D8ECF</color></y_left></axes>
+  <indicator><color>0D8ECF</color><x_balloon_text_color>FFFFFF</x_balloon_text_color> <line_alpha>50</line_alpha><selection_color>0D8ECF</selection_color><selection_alpha>20</selection_alpha></indicator>
+  <zoom_out_button><text_color_hover>FF0F00</text_color_hover></zoom_out_button>
+  <help><button><color>FCD202</color><text_color>000000</text_color><text_color_hover>FF0F00</text_color_hover></button><balloon><color>FCD202</color><text_color>000000</text_color></balloon></help>
+  <graphs>
+  {% for i in 0..(values[0].data|length - 1) %}
+    <graph gid='{{i}}'>
+      <title>{{ itemInfo[i].name }}</title>
+      <color>{{ itemInfo[i].color }}</color>
+      <color_hover>FF0F00</color_hover>
+      <line_width>2</line_width>
+      <fill_alpha>30</fill_alpha>
+      <bullet>round</bullet>
+      <bullet_size>5</bullet_size>
+    </graph>
+  {% endfor %}
+  </graphs>
+  <labels><label lid='0'><text><![CDATA[<b>Chart for meal: {{ meal.name }}</b>]]></text><y>15</y><text_size>13</text_size><align>center</align></label></labels></settings>
+{% endspaceless %}"
+			};
+
+			// change 8 to 80 to test javascript version
+            if (swfobject.hasFlashPlayerVersion("8")){
+	    		swfobject.embedSWF("{{ asset('amcharts/flash/amline.swf') }}", "chartdiv", "600", "400", "8.0.0", "{{ asset('amcharts/flash/expressInstall.swf') }}", flashVars, params);
+	    	}
+			else{
+				var amFallback = new AmCharts.AmFallback();
+				// amFallback.settingsFile = flashVars.settings_file;  		// doesn't support multiple settings files or additional_chart_settins as flash does
+				// amFallback.dataFile = flashVars.data_file;
+				amFallback.chartSettings = flashVars.chart_settings;
+				amFallback.pathToImages = "{{ asset('amcharts/javascript/images/') }}";
+				amFallback.chartData = flashVars.chart_data;
+				amFallback.type = "line";
+				amFallback.write("chartdiv");
+			}
+
+		</script>
+
+		<!-- end of amcharts script -->
+
+
+
+
+
+
+
+
+
+    </div>
+  </div>
+</section>
+{% endif %}
+{% endblock %}

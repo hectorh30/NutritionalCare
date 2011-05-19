@@ -1,0 +1,64 @@
+{% extends '::base.html.twig' %}
+
+{% set menu = 'home' %}
+{% set section = 'meal' %}
+
+{% block body %}
+
+<section class="grid_12">
+<div class="float-right">
+<div class="block-border">
+
+<form class="block-content form" action="#" method="post" name="meal_list_form">
+  <h1>{{ meal.name }}</h1>
+  <div class="block-controls">
+  </div>
+
+  {% if app.session.hasFlash('notice') %}
+  <p class="message success no-margin">
+    {{ app.session.flash('notice') }}
+    <span class="close-bt"></span>
+  </p>
+  {% endif %}
+
+  <div class="no-margin">
+    <table class="table" cellspacing="0">
+      <thead>
+	<tr>
+	  <th scope="col">Nombre</th>
+	  <th scope="col">Temp. min.</th>
+	  <th scope="col">Temp. max.</th>
+	</tr>
+      </thead>
+      <tbody>
+	{% for item in meal.items %}
+	<tr>
+	  <td>
+	    {{item.name}}
+	  </td>
+	  <td>{{ item.minTemp }}</td>
+	  <td>{{ item.maxTemp }}</td>
+	</tr>
+	{% else %}
+	<tr><td>No se encontraron alimentos para este tiempo de comida</td><td></td><td></td></tr>
+	{% endfor %}	
+      </tbody>
+    </table>
+  </div>
+  <ul class="message no-margin">
+    <li>
+      {{ meal.items|length }} alimentos encontrados.
+    </li>
+  </ul>
+  <div class="block-footer">
+    <img src="{{ asset('images/icons/fugue/arrow-curve-000-left.png') }}" width="16" height="16" class="picto"/>
+      <a class="button" href="{{ url('_meal_new') }}">Nuevo tiempo de comida</a> <a class="button" href="{{ url('_item_new') }}">Nuevo alimento</a><br/>
+  </div>
+</form>
+
+</div>
+</section>
+
+
+
+{% endblock %}

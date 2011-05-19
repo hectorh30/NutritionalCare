@@ -1,0 +1,26 @@
+<?php
+
+namespace Hector\FoodServiceBundle\Form;
+
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilder;
+
+class MealMeasuringFormType extends AbstractType
+{
+    public function buildForm(FormBuilder $builder, array $options)
+    {
+      $builder->add('items', 'collection', array('type' => new ItemMeasuringFormType()));
+    }
+
+    public function getDefaultOptions(array $options)
+    {
+        return array(
+            'data_class' => 'Hector\FoodServiceBundle\Entity\Meal',
+        );
+    }
+
+    public function getName()
+    {
+      return 'mealform';
+    }
+}

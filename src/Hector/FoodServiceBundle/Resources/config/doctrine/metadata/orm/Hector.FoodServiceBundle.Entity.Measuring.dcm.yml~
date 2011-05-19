@@ -1,0 +1,22 @@
+Hector\FoodServiceBundle\Entity\Measuring:
+  type: entity
+  table: measuring
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    calibrated:
+      type: boolean
+    time:
+      type: time
+    responsible:
+      type: string
+      lenght: 255
+    temperature:
+      type: integer
+  manyToOne:
+    item:
+      targetEntity: Hector\FoodServiceBundle\Entity\Item
+      inversedBy: measurings

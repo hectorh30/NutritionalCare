@@ -1,0 +1,20 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+{% if app.session.hasFlash('notice') %}
+    <div class="flash-notice">
+        {{ app.session.flash('notice') }}
+    </div>
+{% endif %}
+
+Listing of existing meals:<br/>
+<ul>
+{% for measuring in measurings %}
+  <li> {{ measuring.item}}: {{ measuring.responsible}}, {{ measuring.time.format("Y") }}</li>
+{% else %}
+  <li>No measuring found</li>
+{% endfor %}
+</ul>
+<a href="{{ url('_meal_new') }}">New meal</a><br/>
+<a href="{{ url('_item_new') }}">New item</a><br/>
+{% endblock %}

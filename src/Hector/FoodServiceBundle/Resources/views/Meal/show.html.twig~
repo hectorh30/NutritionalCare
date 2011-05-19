@@ -1,0 +1,14 @@
+{% extends '::base.html.twig' %}
+
+{% set menu = 'home' %}
+{% set section = 'meal' %}
+
+{% block body %}
+<h1>Showing meal: {{ meal.name }}</h1><br/>
+Available items:
+<ul>
+{% for item in meal.items %}
+  <li>{{item.name}},{{item.minTemp}},{{item.maxTemp}}</li>
+{% endfor %}
+</ul>
+{% endblock %}
